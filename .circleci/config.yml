@@ -1,0 +1,49 @@
+version: 2.1
+
+executors:  
+  node-executor:
+    docker:
+      - image: circleci/node:10.16-browsers
+    
+    working_directory: ~/repo
+
+jobs:
+    test:
+      executor: node-executor
+      steps:
+        - checkout
+        - restore_cache:
+            name: Restore Cache
+            keys:
+              - v1-dependencies-{{ checksum "package.json" }}
+              - v1-dependencies-
+        - run: 
+            npm install
+        - save_cache:
+            paths:
+              - node_modules
+            key: v1-dependencies-{{ checksum "package.json" }}
+        - run: npm test
+        - run:
+            name: Save Test Results
+            command: |
+              mkdir -p test-results
+            when: always
+        - store_test_results:
+            path: test-results
+          
+workflows:
+  version: 2
+  nightly:
+    jobs:
+      - test
+    triggers:
+      - schedule:
+          cron: '0 0 * * *'
+          filters:
+            branches:
+              only:
+                - master
+  build_and_test:
+    jobs:
+      - test
