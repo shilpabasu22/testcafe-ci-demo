@@ -1,0 +1,61 @@
+{
+  "name": "totee2etests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "testcafe chrome:headless tests/desktop/**/* -r xunit:test-results/res.xml",
+    "test:default": "node ./cli/index.js",
+    "test:desktop": "npm test -- -d ./tests/desktop",
+    "test:headless": "npm test -- -b chrome:headless",
+    "test:multiple": "npm test -- -b chrome -b firefox",
+    "test:firefox": "npm test -- -b firefox",
+    "test:safari": "npm test -- -b safari",
+    "test:chrome:mobile": "npm test -- -d ./tests/mobile -b 'chrome:emulation:device=\"iphone X\"'",
+    "test:chrome:3": "npm test -- -c 3 -b chrome",
+    "test:browserstack:mobile": "cross-env BROWSERSTACK_USERNAME=shilpabasu4 BROWSERSTACK_ACCESS_KEY=PJX28zVYT4JQRtSjFpRs testcafe 'browserstack:\"Samsung Galaxy S8\"' ./tests/mobile",
+    "test:browserstack:desktop": "npm test -- -b browserstack:firefox:\"OS X Mojave\" && npm test -- -b browserstack:edge@18:Windows 10",
+    "lint": "eslint . --fix",
+    "test:security": "npm test penetration.test.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "base64-img": "^1.0.4",
+    "chalk": "^2.4.2",
+    "dotenv": "^8.0.0",
+    "testcafe-browser-provider-browserstack": "1.9.0",
+    "testcafe-reporter-html": "^1.4.4",
+    "zaproxy": "1.0.0-rc.1"
+  },
+  "devDependencies": {
+    "axe-core": "^3.2.2",
+    "axe-testcafe": "^3.0.0",
+    "cross-env": "5.2.0",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^5.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-testcafe": "^0.2.1",
+    "husky": "^2.4.1",
+    "lint-staged": "^8.2.1",
+    "minimatch": "3.0.4",
+    "nopt": "^4.0.1",
+    "ora": "^3.4.0",
+    "prettier": "^1.18.2",
+    "testcafe": "*",
+    "testcafe-reporter-xunit": "*"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier --single-quote --write",
+      "git add"
+    ],
+    "**/*.js": "eslint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
