@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "testcafe chrome:headless tests/desktop/**/* -r xunit:test-results/res.xml",
+    "test": "testcafe chrome:headless tests/**/* -r xunit:test-results/res.xml",
     "test:default": "node ./cli/index.js",
     "test:desktop": "npm test -- -d ./tests/desktop",
     "test:headless": "npm test -- -b chrome:headless",
